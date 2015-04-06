@@ -1,46 +1,13 @@
 #coding: utf-8
 
 import sys
-from PyQt4.QtCore import QUrl, SIGNAL, QByteArray, QString
-from PyQt4.QtGui import QApplication
-from PyQt4.QtWebKit import QWebView, QWebPage
+from PyQt4.QtCore import QUrl
 from PyQt4 import QtCore, QtGui
 
 from ui import SimpleChemUI
 
-from conf import (HOMEPAGE_URL, HISTORY_URL,
+from conf import (HISTORY_URL,
                   CALCULATE_URL, USERINFO_URL, LOGOUT_URL)
-
-
-class WebPage(QWebPage):
-    def __init__(self):
-        QWebPage.__init__(self)
-        self.user_agent = "Mozilla/5.0 Chrome/38.0.2125.122 Safari/537.36 ChemClient"
-
-    def userAgentForUrl(self, url):
-        return self.user_agent
-        return QString(QByteArray(self.user_agent))
-
-
-class WebBrowser(QApplication):
-    def __init__(self, url=None):
-        super(WebBrowser, self).__init__(sys.argv)
-        self.url = url or HOMEPAGE_URL
-        self.web_view = QWebView()
-        self.web_page = WebPage()
-        self.web_view.setPage(self.web_page)
-        self.web_frame = self.web_page.currentFrame()
-        self.connect(self.web_view, SIGNAL('loadFinished(bool)'), self.load_finished)
-        self.web_frame.load(QUrl(self.url))
-        self.web_view.show()
-
-    def load_finished(self, is_finished):
-        if is_finished:
-            print self.web_page.mainFrame().contentsSize()
-            #self.web_page.setViewportSize(self.web_page.mainFrame().contentsSize())
-            print self.web_page.currentFrame().url().toString()
-        else:
-            print 'wait....'
 
 
 class WebBrowser2(QtGui.QWidget):
